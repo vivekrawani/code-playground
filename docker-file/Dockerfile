@@ -1,12 +1,16 @@
-FROM node:slim
+FROM node:16-alpine
 
 WORKDIR /app
 
-COPY . .
-
+COPY package*  .
 RUN npm install
-RUN npm run build
+
+COPY prisma ./prisma
 RUN npx prisma generate
+
+COPY . .
+RUN npm run build
+
 
 EXPOSE 3000
 
